@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Calculator</title>
+  <style>
+    body {
+      background-color: lightblue;
+      font-family: sans-serif;
+      display: flex;      /*centres content*/
+      justify-content: center;
+      align-items: center;
+      height: 700px;
+    }
+
+    .calculator {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;         /*rounded corners*/
+      box-shadow: 2px 2px 10px gray;     /*soft shadow around buttons*/
+      width: 240px;
+    }
+
+    #screen {     /*display screen*/
+      width: 100%;
+      height: 40px;
+      font-size: 20px;
+      margin-bottom: 10px;
+      text-align: right;
+      padding-right: 10px;
+    }
+
+    .buttons {
+      display: grid;     
+      grid-template-columns: repeat(4, 1fr);     /*puts 4 buttons in one column grid*/
+      gap: 10px;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #eeeeee;
+      border: 1px solid #ccc;
+    }
+
+    .clear {       /*C button*/
+      background-color: lightcoral;
+      color: white;
+    }
+
+    .equal {
+      background-color: green;
+      color: white;
+      grid-column: span 2;   /*takes 2 grid space in a column*/
+    }
+
+    .operator {      /*(+, −, ×, ÷):*/
+      background-color: lightseagreen;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <input type="text" id="screen" readonly value="0">   /*value start with 0*/   
+    <div class="buttons">
+      <button class="clear" onclick="clearScreen()">C</button>
+      <button onclick="add('(')">(</button>
+      <button onclick="add(')')">)</button>
+      <button class="operator" onclick="add('/')">/</button>
+
+      <button onclick="add('7')">7</button>
+      <button onclick="add('8')">8</button>
+      <button onclick="add('9')">9</button>
+      <button class="operator" onclick="add('*')">*</button>
+
+      <button onclick="add('4')">4</button>
+      <button onclick="add('5')">5</button>
+      <button onclick="add('6')">6</button>
+      <button class="operator" onclick="add('-')">-</button>
+
+      <button onclick="add('1')">1</button>
+      <button onclick="add('2')">2</button>
+      <button onclick="add('3')">3</button>
+      <button class="operator" onclick="add('+')">+</button>
+
+      <button onclick="add('0')">0</button>
+      <button onclick="add('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <script>
+    let screen = document.getElementById("screen");
+
+    function add(value) {
+      if (screen.value === "0") {
+        screen.value = value;
+      } else {
+        screen.value += value;
+      }
+    }
+
+    function clearScreen() {
+      screen.value = "0";
+    }
+
+    function calculate() {
+      try {
+        screen.value = eval(screen.value);
+      } catch {
+        screen.value = "Error";
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artistic Art Gallery</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(to right, #fceff1, #fdf6f0);
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #3b2f63;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .filter-buttons {
+      margin-bottom: 20px;
+    }
+
+    .filter-buttons button {
+      margin: 8px;
+      padding: 12px 20px;
+      background: #e4d0d0;
+      color: #3b2f63;
+      font-weight: bold;
+      border: 2px solid #3b2f63;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-buttons button:hover {
+      background: #3b2f63;
+      color: #fff8f0;
+    }
+
+    .gallery-viewer {
+      position: relative;
+      max-width: 90%;
+      margin: 30px auto;
+    }
+
+    .gallery-viewer img {
+      width: 100%;
+      max-width: 450px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border: 5px solid #e9e1db;
+    }
+
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #f0e7dc;
+      border: 2px solid #3b2f63;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 20px;
+      border-radius: 50%;
+      color: #3b2f63;
+      transition: 0.3s ease;
+    }
+
+    .nav-button:hover {
+      background: #3b2f63;
+      color: #fff;
+    }
+
+    .prev-btn {
+      left: 0;
+    }
+
+    .next-btn {
+      right: 0;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      .nav-button {
+        font-size: 16px;
+        padding: 10px;
+      }
+      .filter-buttons button {
+        padding: 10px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Art Gallery</h1>
+
+<div class="filter-buttons">
+  <button type="button" onclick="filterCategory('canvas')">Canvas</button>
+  <button type="button" onclick="filterCategory('totebag')">Totebags</button>
+</div>
+
+<div class="gallery-viewer">
+  <button class="nav-button prev-btn" type="button" onclick="showPrev()">⟵</button>
+  <img id="mainImage" src="car.jpeg">
+  <button class="nav-button next-btn" type="button" onclick="showNext()">⟶</button>
+</div>
+
+
+ <script>
+    // All images with their category
+var allImages = [
+  { src: "duo tote.jpeg", category: "totebag" },
+  { src: "heart tote.jpeg", category: "totebag" },
+  { src: "yong yang tote.jpeg", category: "totebag" },
+  { src: "car.jpeg", category: "canvas" },
+  { src: "house.jpeg", category: "canvas" },
+  { src: "ying yang canvas.jpeg", category: "canvas" },
+  { src: "miffy.jpeg", category: "canvas" },
+  { src: "trio.jpeg", category: "canvas" },
+  { src: "cute.jpeg", category: "canvas" }
+];
+
+var filteredImages = []; // Only selected category images
+var index = 0; // Current image position
+
+function filterCategory(category) {
+  filteredImages = [];
+  for (var i = 0; i < allImages.length; i++) {
+    if (allImages[i].category === category) {
+      filteredImages.push(allImages[i]);
+    }
+  }
+  index = 0;
+  showImage();
+}
+
+function showImage() {
+  var imgTag = document.getElementById("mainImage");
+  imgTag.src = filteredImages[index].src;
+}
+
+function showNext() {
+  index = index + 1;
+  if (index >= filteredImages.length) {
+    index = 0;
+  }
+  showImage();
+}
+
+function showPrev() {
+  index = index - 1;
+  if (index < 0) {
+    index = filteredImages.length - 1;
+  }
+  showImage();
+}
+
+// Show canvas category by default
+filterCategory("canvas");
+
+ </script>
+
+</body>
+</html> -->
